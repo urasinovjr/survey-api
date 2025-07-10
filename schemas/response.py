@@ -11,8 +11,7 @@ class ResponseCreate(BaseModel):
 
     @validator("response_value")
     def validate_response_value(cls, v, values):
-        # Валидация выполняется в сервисном слое
-        return str(v)  # Преобразуем в строку для БД
+        return str(v)
 
 class ResponseUpdate(BaseModel):
     response_value: Union[str, int] | None = None

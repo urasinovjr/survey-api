@@ -1,22 +1,26 @@
 from fastapi import FastAPI
-from routes import versions, questions, responses
-import logging
+from routes import version, question, response
 from database import init_db
+from fastapi.middleware.cors import CORSMiddleware
 
-# Настройка логирования
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-logger = logging.getLogger(__name__)
+app = FastAPI()
 
-# Создаём приложение FastAPI
-app = FastAPI(title="Construction Survey API", description="API для строительного опросника")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# Подключаем маршруты
-app.include_router(versions.router, prefix="/versions", tags=["Versions"])
-app.include_router(questions.router, prefix="/questions", tags=["Questions"])
-app.include_router(responses.router, prefix="/responses", tags=["Responses"])
+app.include_router(version.router)
+app.include_router(question.router)
+app.include_router(response.router)
 
-# Инициализация базы данных при старте
 @app.on_event("startup")
 def startup_event():
-    logger.info("Инициализация базы данных")
     init_db()
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Construction Survey API"}
