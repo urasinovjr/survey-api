@@ -1,0 +1,4 @@
+venv/
+pycache/ *.pyc *.pyo *.pyd
+.idea/ *.sublime-project *.sublime-workspace
+*.log *.tmp

@@ -1,11 +1,18 @@
 from pydantic import BaseModel
+from datetime import datetime
+import pytz
 
-# Модель для создания версии
 class VersionCreate(BaseModel):
     name: str
 
-# Модель для ответа с данными версии
+class VersionUpdate(BaseModel):
+    name: str | None = None
+
 class Version(BaseModel):
     id: int
     name: str
-    created_at: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+        json_encoders = {datetime: lambda v: v.isoformat()}

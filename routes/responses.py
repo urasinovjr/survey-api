@@ -1,48 +1,41 @@
-from fastapi import APIRouter, HTTPException
-from schemas.response import ResponseCreate, Response
-from data import questions, responses, find_question
-from datetime import datetime
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from schemas.response import ResponseCreate, ResponseUpdate, Response
+from services.response import ResponseService
+from database import get_db
 from typing import List
 
-# Создаём маршруты для ответов
 router = APIRouter()
 
-@router.post("/", response_model=Response)
-def create_response(response: ResponseCreate):
+@router.post("/", response_model=Response, summary="Create a new response")
+def create_response(response: ResponseCreate, db: Session = Depends(get_db)):
     """Сохраняет ответ пользователя"""
-    question = find_question(response.question_id)
-    if not question or question["version_id"] != response.version_id:
-        raise HTTPException(status_code=404, detail="Question or version not found")
-    
-    # Проверяем, что ответ соответствует типу вопроса
-    if question["type"] == "integer":
-        try:
-            value = int(response.response_value)
-            if question["constraints"]:
-                if "min" in question["constraints"] and value < question["constraints"]["min"]:
-                    raise HTTPException(status_code=400, detail=f"Value must be >= {question['constraints']['min']}")
-                if "max" in question["constraints"] and value > question["constraints"]["max"]:
-                    raise HTTPException(status_code=400, detail=f"Value must be <= {question['constraints']['max']}")
-        except ValueError:
-            raise HTTPException(status_code=400, detail="Must be a number")
-    elif question["type"] == "dropdown":
-        if question["options"] and response.response_value not in question["options"] and question["number"] != "2.1.1":
-            raise HTTPException(status_code=400, detail="Invalid option")
-    
-    # Создаём новый ответ
-    new_id = max([r["id"] for r in responses], default=0) + 1
-    new_response = {
-        "id": new_id,
-        "user_id": response.user_id,
-        "version_id": response.version_id,
-        "question_id": response.question_id,
-        "response_value": response.response_value,
-        "response_timestamp": datetime.utcnow().isoformat()
-    }
-    responses.append(new_response)
-    return Response(**new_response)
+    return ResponseService(db).create(response)
 
-@router.get("/", response_model=List[Response])
-def get_responses(user_id: int, version_id: int):
-    """Возвращает все ответы пользователя для версии"""
-    return [Response(**r) for r in responses if r["user_id"] == user_id and r["version_id"] == version_id]
+@router.get("/", response_model=List[Response], summary="Get responses by user and version")
+def get_responses(user_id: int, version_id: int, db: Session = Depends(get_db)):
+    """Возвращает ответы пользователя для версии"""
+    return ResponseService(db).get_by_user_version(user_id, version_id)
+
+@router.get("/{response_id}", response_model=Response, summary="Get response by ID")
+def get_response(response_id: int, db: Session = Depends(get_db)):
+    """Возвращает ответ по ID"""
+    response = ResponseService(db).get(response_id)
+    if not response:
+        raise HTTPException(status_code=404, detail="Response not found")
+    return response
+
+@router.put("/{response_id}", response_model=Response, summary="Update response")
+def update_response(response_id: int, response: ResponseUpdate, db: Session = Depends(get_db)):
+    """Обновляет ответ по ID"""
+    updated_response = ResponseService(db).update(response_id, response)
+    if not updated_response:
+        raise HTTPException(status_code=404, detail="Response not found")
+    return updated_response
+
+@router.delete("/{response_id}", response_model=bool, summary="Delete response")
+def delete_response(response_id: int, db: Session = Depends(get_db)):
+    """Удаляет ответ по ID"""
+    if not ResponseService(db).delete(response_id):
+        raise HTTPException(status_code=404, detail="Response not found")
+    return True
