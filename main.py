@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from routes import version, question, response
 from database import init_db
 from fastapi.middleware.cors import CORSMiddleware
+import asyncio
 
 app = FastAPI()
 
@@ -17,9 +18,11 @@ app.include_router(version.router)
 app.include_router(question.router)
 app.include_router(response.router)
 
+
 @app.on_event("startup")
-def startup_event():
-    init_db()
+async def startup_event():
+    await init_db()  # Теперь async
+
 
 @app.get("/")
 def read_root():
