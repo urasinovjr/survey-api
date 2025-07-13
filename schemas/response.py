@@ -1,24 +1,24 @@
 from pydantic import BaseModel, validator
 from datetime import datetime
-from typing import Union, Literal
-import pytz
+
 
 class ResponseCreate(BaseModel):
     user_id: int
     version_id: int
     question_id: int
-    response_value: Union[str, int]
+    response_value: str  # Упрощаем: все значения как строки, конвертим в сервисе
 
     @validator("response_value")
-    def validate_response_value(cls, v, values):
-        return str(v)
+    def validate_value(cls, v):
+        # Простая проверка здесь, детальная - в сервисе
+        if not v:
+            raise ValueError("Response value cannot be empty")
+        return v
+
 
 class ResponseUpdate(BaseModel):
-    response_value: Union[str, int] | None = None
+    response_value: str | None = None
 
-    @validator("response_value")
-    def validate_response_value(cls, v):
-        return str(v) if v is not None else None
 
 class Response(BaseModel):
     id: int

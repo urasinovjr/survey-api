@@ -1,4 +1,20 @@
-venv/
-pycache/ *.pyc *.pyo *.pyd
-.idea/ *.sublime-project *.sublime-workspace
-*.log *.tmp
+   __pycache__/
+   *.py[cod]
+   *.pyo
+   *.pyc
+   *.pyd
+   .Python
+   env/
+   venv/
+   .env
+
+   .idea/
+   *.sublime-*
+
+   *.sqlite3
+   *.db
+
+   *.log
+
+   secrets.json
+   config.ini
