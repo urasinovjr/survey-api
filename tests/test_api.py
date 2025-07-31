@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from main import app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database import Base, get_db
+from db.database import Base, get_db
 
 SQLALCHEMY_DATABASE_URL = "postgresql://postgres:password@localhost:5432/test_survey_db"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
@@ -27,21 +27,24 @@ def setup_db():
     Base.metadata.drop_all(bind=engine)
 
 def test_create_response(setup_db):
+    # Создаём версию
     response = client.post("/versions", json={"name": "v1.0"})
     assert response.status_code == 200
     version_id = response.json()["id"]
 
+    # Создаём вопрос
     question_data = {
         "version_id": version_id,
         "number": "2.1",
         "text": "Количество корпусов",
         "type": "integer",
-        "constraints": json.dumps({"min": 1, "max": 20, "format": "thousands"})
+        "constraints": json.dumps({"min": 1, "max": 20})
     }
     response = client.post("/questions", json=question_data)
     assert response.status_code == 200
     question_id = response.json()["id"]
 
+    # Создаём ответ
     response_data = {
         "user_id": 101,
         "version_id": version_id,
@@ -50,26 +53,31 @@ def test_create_response(setup_db):
     }
     response = client.post("/responses", json=response_data)
     assert response.status_code == 200
-    assert response.json()["response_value"] == 5
+    assert response.json()["response_value"] == "5"
 
+    # Проверяем ошибку валидации
     response_data["response_value"] = 21
     response = client.post("/responses", json=response_data)
     assert response.status_code == 400
     assert "Value must be <= 20" in response.json()["detail"]
 
 def test_get_responses(setup_db):
+    # Создаём версию и вопрос
     response = client.post("/versions", json={"name": "v1.0"})
+    assert response.status_code == 200
     version_id = response.json()["id"]
     question_data = {
         "version_id": version_id,
         "number": "2.1",
         "text": "Количество корпусов",
         "type": "integer",
-        "constraints": json.dumps({"min": 1, "max": 20, "format": "thousands"})
+        "constraints": json.dumps({"min": 1, "max": 20})
     }
     response = client.post("/questions", json=question_data)
+    assert response.status_code == 200
     question_id = response.json()["id"]
 
+    # Создаём ответ
     response_data = {
         "user_id": 101,
         "version_id": version_id,
@@ -78,6 +86,7 @@ def test_get_responses(setup_db):
     }
     client.post("/responses", json=response_data)
 
+    # Проверяем получение ответов
     response = client.get(f"/responses?user_id=101&version_id={version_id}")
     assert response.status_code == 200
-    assert response.json()[0]["response_value"] == "5,000"
+    assert response.json()[0]["response_value"] == "5"

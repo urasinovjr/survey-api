@@ -3,10 +3,5 @@ uvicorn
 pydantic
 sqlalchemy
 psycopg2-binary
-asyncpg
-pytest
-pytest-mock
-pytest-asyncio
-redis
-python-jose
+alembic
 python-dotenv

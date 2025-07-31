@@ -1,26 +1,28 @@
 from sqlalchemy.orm import Session
-from schemas.version import VersionCreate, VersionUpdate
+from domain.schemas import VersionCreate, VersionUpdate, Version
 from repositories.version import VersionRepository
-import logging
-
-logger = logging.getLogger(__name__)
+from typing import List
 
 class VersionService:
     def __init__(self, db: Session):
         self.repo = VersionRepository(db)
 
-    def create(self, version: VersionCreate):
-        logger.info(f"Service: Creating version {version.name}")
+    def create(self, version: VersionCreate) -> Version:
+        """Create a new survey version."""
         return self.repo.create(version)
 
-    def get(self, version_id: int):
-        return self.repo.get(version_id)
-
-    def get_all(self):
+    def get_all(self) -> List[Version]:
+        """Retrieve all survey versions."""
         return self.repo.get_all()
 
-    def update(self, version_id: int, version: VersionUpdate):
+    def get(self, version_id: int) -> Version | None:
+        """Retrieve a specific version by ID."""
+        return self.repo.get(version_id)
+
+    def update(self, version_id: int, version: VersionUpdate) -> Version | None:
+        """Update an existing version."""
         return self.repo.update(version_id, version)
 
-    def delete(self, version_id: int):
+    def delete(self, version_id: int) -> bool:
+        """Delete a version by ID."""
         return self.repo.delete(version_id)
