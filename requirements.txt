@@ -1,7 +1,8 @@
-fastapi
-uvicorn
-pydantic
-sqlalchemy
-psycopg2-binary
 alembic
+fastapi
+psycopg2-binary
+pydantic
 python-dotenv
+pytz
+sqlalchemy
+uvicorn
