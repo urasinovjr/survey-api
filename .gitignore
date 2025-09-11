@@ -1,1 +1,26 @@
-venv/ pycache/ *.pyc *.pyo *.pyd *.db migrations/ .env
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+
+# Virtual environment
+venv/
+.env
+.env.docker
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Alembic migrations (оставляем под версионирование!)
+#!migrations/
+!migrations/versions/
