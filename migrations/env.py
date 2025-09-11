@@ -1,13 +1,25 @@
+import sys, pathlib
+
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1]))
+
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from alembic import context
-from domain.models import Base
+
+from db.base import Base
+import domain.models
 from db.settings import Settings
 
 config = context.config
-fileConfig(config.config_file_name)
+
+if config.config_file_name:
+    try:
+        fileConfig(config.config_file_name)
+    except Exception:
+        pass
 
 target_metadata = Base.metadata
+
 
 def run_migrations_offline():
     url = Settings().DATABASE_URL
@@ -20,7 +32,9 @@ def run_migrations_offline():
     with context.begin_transaction():
         context.run_migrations()
 
+
 def run_migrations_online():
+    config.set_main_option("sqlalchemy.url", Settings().DATABASE_URL)
     connectable = engine_from_config(
         config.get_section(config.config_ini_section),
         prefix="sqlalchemy.",
@@ -29,6 +43,7 @@ def run_migrations_online():
         context.configure(connection=connection, target_metadata=target_metadata)
         with context.begin_transaction():
             context.run_migrations()
+
 
 if context.is_offline_mode():
     run_migrations_offline()

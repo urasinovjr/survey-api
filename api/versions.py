@@ -6,17 +6,28 @@ from db.database import get_db
 from typing import List
 from domain.messages import Messages
 
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy.orm import Session
+from typing import List, Optional
+
+from db.database import get_db
+from domain.schemas import Version, VersionCreate, VersionUpdate
+from repositories.version import VersionRepository
+
 router = APIRouter(prefix="/versions", tags=["versions"])
+
 
 @router.post("/", response_model=Version)
 def create_version(version: VersionCreate, db: Session = Depends(get_db)) -> Version:
     """Create a new survey version."""
     return VersionService(db).create(version)
 
+
 @router.get("/", response_model=List[Version])
 def get_versions(db: Session = Depends(get_db)) -> List[Version]:
     """Retrieve all survey versions."""
     return VersionService(db).get_all()
+
 
 @router.get("/{version_id}", response_model=Version)
 def get_version(version_id: int, db: Session = Depends(get_db)) -> Version:
@@ -26,13 +37,34 @@ def get_version(version_id: int, db: Session = Depends(get_db)) -> Version:
         raise HTTPException(status_code=404, detail=Messages.VERSION_NOT_FOUND.value)
     return version
 
+
+@router.get("/", response_model=List[Version])
+def list_versions(
+    db: Session = Depends(get_db),
+    limit: int = Query(100, ge=1, le=1000),
+    offset: int = Query(0, ge=0),
+):
+    return VersionRepository(db).list(limit=limit, offset=offset)
+
+
+@router.get("/{version_id}", response_model=Version)
+def get_version(version_id: int, db: Session = Depends(get_db)):
+    obj = VersionRepository(db).get(version_id)
+    if not obj:
+        raise HTTPException(status_code=404, detail="Version not found")
+    return obj
+
+
 @router.put("/{version_id}", response_model=Version)
-def update_version(version_id: int, version: VersionUpdate, db: Session = Depends(get_db)) -> Version:
+def update_version(
+    version_id: int, version: VersionUpdate, db: Session = Depends(get_db)
+) -> Version:
     """Update an existing version."""
     updated = VersionService(db).update(version_id, version)
     if not updated:
         raise HTTPException(status_code=404, detail=Messages.VERSION_NOT_FOUND.value)
     return updated
+
 
 @router.delete("/{version_id}", response_model=bool)
 def delete_version(version_id: int, db: Session = Depends(get_db)) -> bool:

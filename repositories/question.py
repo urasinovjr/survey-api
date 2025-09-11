@@ -1,12 +1,21 @@
 from sqlalchemy.orm import Session
 from domain.models import Question
 from domain.schemas import QuestionCreate, QuestionUpdate
-from typing import List
+from typing import List, Dict
 import json
+
 
 class QuestionRepository:
     def __init__(self, db: Session):
         self.db = db
+
+    def get_map_by_ids(self, ids: List[int]) -> Dict[int, str]:
+        rows = (
+            self.db.query(self.model.id, self.model.number)
+            .filter(self.model.id.in_(ids))
+            .all()
+        )
+        return {qid: num for (qid, num) in rows}
 
     def create(self, question: QuestionCreate) -> Question:
         """Create a new question in the database."""
@@ -16,7 +25,9 @@ class QuestionRepository:
             text=question.text,
             type=question.type,
             options=json.dumps(question.options) if question.options else None,
-            constraints=json.dumps(question.constraints) if question.constraints else None
+            constraints=(
+                json.dumps(question.constraints) if question.constraints else None
+            ),
         )
         self.db.add(db_question)
         self.db.commit()
@@ -42,9 +53,9 @@ class QuestionRepository:
             if question.type:
                 db_question.type = question.type
             if question.options is not None:
-                db_question.options = json.dumps(question.options)
+                db_question.options = question.options
             if question.constraints is not None:
-                db_question.constraints = json.dumps(question.constraints)
+                db_question.constraints = question.constraints
             self.db.commit()
             self.db.refresh(db_question)
             return db_question

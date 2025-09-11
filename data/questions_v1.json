@@ -1,0 +1,2234 @@
+{
+    "version": {
+        "name": "v1"
+    },
+    "questions": [
+        {
+            "number": "1.1",
+            "text": "Наименование объекта",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Жилой дом",
+                    "Коммерческое здание"
+                ]
+            },
+            "constraints": {
+                "default": "Жилой дом"
+            }
+        },
+        {
+            "number": "1.2",
+            "text": "Адрес объекта",
+            "type": "text",
+            "constraints": {
+                "example": "г. Москва, ул. Дмитрия Ульянова, влд. 47"
+            }
+        },
+        {
+            "number": "1.3",
+            "text": "Назначение объекта",
+            "type": "text",
+            "constraints": {
+                "example": "Жилое здание (Ф1.3)"
+            }
+        },
+        {
+            "number": "1.4",
+            "text": "Класс комфорта",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Стандарт",
+                    "Комфорт",
+                    "Комфорт+",
+                    "Бизнес",
+                    "Премиум",
+                    "Элит"
+                ]
+            },
+            "constraints": {
+                "default": "Стандарт"
+            }
+        },
+        {
+            "number": "1.5",
+            "text": "Период применения индексов изменения сметной стоимости (квартал и год)",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "1 квартал 2022",
+                    "2 квартал 2022",
+                    "3 квартал 2022",
+                    "4 квартал 2022",
+                    "1 квартал 2023",
+                    "2 квартал 2023",
+                    "3 квартал 2023",
+                    "4 квартал 2023",
+                    "1 квартал 2024",
+                    "2 квартал 2024",
+                    "3 квартал 2024",
+                    "4 квартал 2024",
+                    "1 квартал 2025",
+                    "2 квартал 2025",
+                    "3 квартал 2025",
+                    "4 квартал 2025"
+                ]
+            },
+            "constraints": {
+                "default": "3 квартал 2024"
+            }
+        },
+        {
+            "number": "1.6",
+            "text": "Регион строительства",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "г.Москва",
+                    "Московская область"
+                ]
+            },
+            "constraints": {
+                "default": "г.Москва"
+            }
+        },
+        {
+            "number": "1.7",
+            "text": "Сейсмичность региона строительства",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "10 баллов",
+                    "9 баллов",
+                    "8 баллов",
+                    "7 баллов",
+                    "менее 7 баллов"
+                ]
+            },
+            "constraints": {
+                "default": "менее 7 баллов"
+            }
+        },
+        {
+            "number": "1.8",
+            "text": "Площадь участка строительства, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 1,
+                "example": 11303
+            }
+        },
+        {
+            "number": "1.9",
+            "text": "Площадь застройки, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 1,
+                "example": 6032
+            }
+        },
+        {
+            "number": "1.10",
+            "text": "Конструктивная схема объекта",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "монолитно-кирпичный",
+                    "монолитно-каркасный",
+                    "монолитный",
+                    "панельный",
+                    "кирпичный"
+                ]
+            },
+            "constraints": {
+                "default": "монолитно-каркасный"
+            }
+        },
+        {
+            "number": "1.11",
+            "text": "Тип фасадного остекления",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Сплошное остекление от пола",
+                    "Классическое остекление с окнами и подоконным пространством",
+                    "Смешанное - Сплошное / Классическое 50/50"
+                ]
+            },
+            "constraints": {
+                "default": "Классическое остекление с окнами и подоконным пространством"
+            }
+        },
+        {
+            "number": "1.12",
+            "text": "Тип фундамента",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Свайный фундамент",
+                    "Монолитная плита на естественном основании"
+                ]
+            },
+            "constraints": {
+                "default": "Монолитная плита на естественном основании"
+            }
+        },
+        {
+            "number": "2.1",
+            "text": "Количество корпусов, конструктивно связанных между собой",
+            "type": "integer",
+            "constraints": {
+                "min": 1,
+                "max": 20,
+                "example": 2
+            }
+        },
+        {
+            "number": "2.1.1",
+            "text": "Выберите корпуса, которые размещаются на общей плите подземной части",
+            "type": "dropdown",
+            "options": {
+                "values": [],
+                "depends_on": "2.1",
+                "condition": ">1"
+            },
+            "constraints": {
+                "dynamic_options": true,
+                "exclude_from": [
+                    "2.2.1",
+                    "2.3.1"
+                ]
+            }
+        },
+        {
+            "number": "2.2",
+            "text": "Количество стилобатов на объекте",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "max_ref": "2.1",
+                "example": 0
+            }
+        },
+        {
+            "number": "2.2.1",
+            "text": "Выберите корпус, который связан со стилобатом",
+            "type": "dropdown",
+            "options": {
+                "values": [],
+                "depends_on": "2.2",
+                "condition": ">0"
+            },
+            "constraints": {
+                "dynamic_options": true,
+                "exclude_from": [
+                    "2.1.1",
+                    "2.3.1"
+                ]
+            }
+        },
+        {
+            "number": "2.3",
+            "text": "Количество пристроек с помещениями общественного назначения на объекте",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "max_ref": "2.1",
+                "example": 1
+            }
+        },
+        {
+            "number": "2.3.1",
+            "text": "Выберите корпус, который связан с пристройкой",
+            "type": "dropdown",
+            "options": {
+                "values": [],
+                "depends_on": "2.3",
+                "condition": ">0"
+            },
+            "constraints": {
+                "dynamic_options": true,
+                "exclude_from": [
+                    "2.1.1",
+                    "2.2.1"
+                ]
+            }
+        },
+        {
+            "number": "2.1.2",
+            "text": "Количество этажей в корпусе",
+            "type": "integer",
+            "constraints": {
+                "min": 1,
+                "max": 100,
+                "example": 17,
+                "prefill_from_previous": true
+            }
+        },
+        {
+            "number": "2.1.3",
+            "text": "Количество секций в корпусе",
+            "type": "integer",
+            "constraints": {
+                "min": 1,
+                "example": 2,
+                "prefill_from_previous": true
+            }
+        },
+        {
+            "number": "2.1.4",
+            "text": "Общая площадь квартир в корпусе, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 100,
+                "max": 200000,
+                "example": 5000
+            }
+        },
+        {
+            "number": "2.1.5",
+            "text": "Общая площадь нежилых помещений в корпусе, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "max": 100000,
+                "example": 1000
+            }
+        },
+        {
+            "number": "2.1.6",
+            "text": "Общая площадь квартир объекта (с учетом летних помещений), м²",
+            "type": "integer",
+            "constraints": {
+                "min": 100,
+                "max": 200000,
+                "max_ref_percent": {
+                    "ref": "2.1.4",
+                    "percent": 80
+                },
+                "example": 4000
+            }
+        },
+        {
+            "number": "2.1.7",
+            "text": "Общая площадь встроенных помещений общественного назначения, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "max": 50000,
+                "example": 500
+            }
+        },
+        {
+            "number": "2.1.8",
+            "text": "Общая площадь помещений общественного назначения в стилобате, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "max": 50000,
+                "example": 0,
+                "depends_on": "2.2",
+                "condition": ">0"
+            }
+        },
+        {
+            "number": "2.1.9",
+            "text": "Количество машиномест в подземной автостоянке",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 50
+            }
+        },
+        {
+            "number": "2.1.10",
+            "text": "Площадь подземной части, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 3000
+            }
+        },
+        {
+            "number": "2.1.11",
+            "text": "Количество подземных этажей",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "max": 5,
+                "example": 1
+            }
+        },
+        {
+            "number": "2.1.12",
+            "text": "Высота подземной части, м",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 3
+            }
+        },
+        {
+            "number": "2.1.13",
+            "text": "Пожарно-техническая высота секции корпуса, м",
+            "type": "integer",
+            "constraints": {
+                "min": 1,
+                "example": 50,
+                "depends_on_stilobate": "2.2"
+            }
+        },
+        {
+            "number": "2.1.14",
+            "text": "Общая площадь технических помещений, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 200
+            }
+        },
+        {
+            "number": "2.1.15",
+            "text": "Площадь кровли, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 1000
+            }
+        },
+        {
+            "number": "2.1.16",
+            "text": "Тип кровли",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Плоская",
+                    "Скатная",
+                    "Эксплуатируемая"
+                ]
+            },
+            "constraints": {
+                "default": "Плоская"
+            }
+        },
+        {
+            "number": "2.1.17",
+            "text": "Наличие технического этажа",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "2.1.18",
+            "text": "Наличие чердака",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "2.1.19",
+            "text": "Наличие мансарды",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "2.1.20",
+            "text": "Тип наружных стен",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Кирпич",
+                    "Монолит",
+                    "Панели"
+                ]
+            },
+            "constraints": {
+                "default": "Кирпич"
+            }
+        },
+        {
+            "number": "2.1.21",
+            "text": "Тип перекрытий",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Монолитные",
+                    "Сборные",
+                    "Смешанные"
+                ]
+            },
+            "constraints": {
+                "default": "Монолитные"
+            }
+        },
+        {
+            "number": "2.1.2",
+            "text": "Количество этажей в корпусе",
+            "type": "integer",
+            "constraints": {
+                "min": 1,
+                "max": 100,
+                "example": 17,
+                "prefill_from_previous": true
+            }
+        },
+        {
+            "number": "2.1.3",
+            "text": "Количество секций в корпусе",
+            "type": "integer",
+            "constraints": {
+                "min": 1,
+                "example": 2,
+                "prefill_from_previous": true
+            }
+        },
+        {
+            "number": "2.1.4",
+            "text": "Общая площадь квартир в корпусе, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 100,
+                "max": 200000,
+                "example": 5000
+            }
+        },
+        {
+            "number": "2.1.5",
+            "text": "Общая площадь нежилых помещений в корпусе, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "max": 100000,
+                "example": 1000
+            }
+        },
+        {
+            "number": "2.1.6",
+            "text": "Общая площадь квартир объекта (с учетом летних помещений), м²",
+            "type": "integer",
+            "constraints": {
+                "min": 100,
+                "max": 200000,
+                "max_ref_percent": {
+                    "ref": "2.1.4",
+                    "percent": 80
+                },
+                "example": 4000
+            }
+        },
+        {
+            "number": "2.1.7",
+            "text": "Общая площадь встроенных помещений общественного назначения, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "max": 50000,
+                "example": 500
+            }
+        },
+        {
+            "number": "2.1.8",
+            "text": "Общая площадь помещений общественного назначения в стилобате, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "max": 50000,
+                "example": 0,
+                "depends_on": "2.2",
+                "condition": ">0"
+            }
+        },
+        {
+            "number": "2.1.9",
+            "text": "Количество машиномест в подземной автостоянке",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 50
+            }
+        },
+        {
+            "number": "2.1.10",
+            "text": "Площадь подземной части, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 3000
+            }
+        },
+        {
+            "number": "2.1.11",
+            "text": "Количество подземных этажей",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "max": 5,
+                "example": 1
+            }
+        },
+        {
+            "number": "2.1.12",
+            "text": "Высота подземной части, м",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 3
+            }
+        },
+        {
+            "number": "2.1.13",
+            "text": "Пожарно-техническая высота секции корпуса, м",
+            "type": "integer",
+            "constraints": {
+                "min": 1,
+                "example": 50,
+                "depends_on_stilobate": "2.2"
+            }
+        },
+        {
+            "number": "2.1.14",
+            "text": "Общая площадь технических помещений, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 200
+            }
+        },
+        {
+            "number": "2.1.15",
+            "text": "Площадь кровли, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 1000
+            }
+        },
+        {
+            "number": "2.1.16",
+            "text": "Тип кровли",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Плоская",
+                    "Скатная",
+                    "Эксплуатируемая"
+                ]
+            },
+            "constraints": {
+                "default": "Плоская"
+            }
+        },
+        {
+            "number": "2.1.17",
+            "text": "Наличие технического этажа",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "2.1.18",
+            "text": "Наличие чердака",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "2.1.19",
+            "text": "Наличие мансарды",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "2.1.20",
+            "text": "Тип наружных стен",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Кирпич",
+                    "Монолит",
+                    "Панели"
+                ]
+            },
+            "constraints": {
+                "default": "Кирпич"
+            }
+        },
+        {
+            "number": "2.1.21",
+            "text": "Тип перекрытий",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Монолитные",
+                    "Сборные",
+                    "Смешанные"
+                ]
+            },
+            "constraints": {
+                "default": "Монолитные"
+            }
+        },
+        {
+            "number": "2.1.22",
+            "text": "Количество лифтов в корпусе",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 2,
+                "depends_on": [
+                    "2.1.2",
+                    "2.1.4"
+                ]
+            }
+        },
+        {
+            "number": "2.1.23",
+            "text": "Наличие мусоропровода",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "2.1.24",
+            "text": "Наличие системы дымоудаления",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "2.1.25",
+            "text": "Тип системы отопления",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Центральное",
+                    "Индивидуальное",
+                    "Комбинированное"
+                ]
+            },
+            "constraints": {
+                "default": "Центральное"
+            }
+        },
+        {
+            "number": "2.1.26",
+            "text": "Тип системы вентиляции",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Естественная",
+                    "Принудительная",
+                    "Комбинированная"
+                ]
+            },
+            "constraints": {
+                "default": "Естественная"
+            }
+        },
+        {
+            "number": "2.1.27",
+            "text": "Тип системы водоснабжения",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Центральное",
+                    "Автономное"
+                ]
+            },
+            "constraints": {
+                "default": "Центральное"
+            }
+        },
+        {
+            "number": "2.1.28",
+            "text": "Тип системы канализации",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Центральная",
+                    "Автономная"
+                ]
+            },
+            "constraints": {
+                "default": "Центральная"
+            }
+        },
+        {
+            "number": "2.1.29",
+            "text": "Наличие системы кондиционирования",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "3.5.рд.св.кор",
+            "text": "Количество пожарных отсеков надземной части объекта",
+            "type": "integer",
+            "constraints": {
+                "min": 1,
+                "example": 1,
+                "editable": true
+            }
+        },
+        {
+            "number": "3.6.рд.св.кор",
+            "text": "Степень огнестойкости пожарного отсека",
+            "type": "text",
+            "constraints": {
+                "read_only": true,
+                "calculation": "II if 2.1.13 < 50 else I",
+                "example": "I"
+            }
+        },
+        {
+            "number": "3.7.рд.св.кор",
+            "text": "Класс конструктивной пожарной опасности отсека",
+            "type": "text",
+            "constraints": {
+                "read_only": true,
+                "example": "C0"
+            }
+        },
+        {
+            "number": "3.8.рд.св.кор",
+            "text": "Предел огнестойкости основных строительных конструкций",
+            "type": "text",
+            "constraints": {
+                "read_only": true,
+                "calculation": {
+                    "<50": "R90",
+                    "50-75": "R120",
+                    "75-100": "R150",
+                    "100-150": "R180",
+                    ">150": "R240"
+                },
+                "example": "R120"
+            }
+        },
+        {
+            "number": "4.1",
+            "text": "Наличие системы видеонаблюдения",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.2",
+            "text": "Наличие системы контроля доступа",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.3",
+            "text": "Наличие системы пожарной сигнализации",
+            "type": "boolean",
+            "constraints": {
+                "default": true,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.4",
+            "text": "Расчетный коэффициент для наружных инженерных сетей (ИС), в т.ч. затраты на техприсоединение к ИС",
+            "type": "integer",
+            "constraints": {
+                "min": 10000000,
+                "max": 400000000,
+                "example": 10000
+            }
+        },
+        {
+            "number": "4.5",
+            "text": "Расчетный коэффициент для благоустройства и озеленения территории",
+            "type": "integer",
+            "constraints": {
+                "min": 20000000,
+                "max": 90000000,
+                "example": 1000
+            }
+        },
+        {
+            "number": "4.6",
+            "text": "Площадь озеленения, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 500
+            }
+        },
+        {
+            "number": "4.7",
+            "text": "Количество детских площадок",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 1
+            }
+        },
+        {
+            "number": "4.8",
+            "text": "Количество спортивных площадок",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 1
+            }
+        },
+        {
+            "number": "4.9",
+            "text": "Наличие парковочных мест на территории",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 20
+            }
+        },
+        {
+            "number": "4.10",
+            "text": "Тип покрытия дорог на территории",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Асфальт",
+                    "Бетон",
+                    "Плитка"
+                ]
+            },
+            "constraints": {
+                "default": "Асфальт"
+            }
+        },
+        {
+            "number": "4.11",
+            "text": "Наличие системы освещения территории",
+            "type": "boolean",
+            "constraints": {
+                "default": true,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.12",
+            "text": "Тип системы освещения",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Светодиодное",
+                    "Галогенное",
+                    "Комбинированное"
+                ]
+            },
+            "constraints": {
+                "default": "Светодиодное",
+                "depends_on": "4.11",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.13",
+            "text": "Наличие системы полива газонов",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.14",
+            "text": "Количество деревьев на территории",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 50
+            }
+        },
+        {
+            "number": "4.15",
+            "text": "Количество кустарников на территории",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 100
+            }
+        },
+        {
+            "number": "4.16",
+            "text": "Наличие велодорожек",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.17",
+            "text": "Площадь велодорожек, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 200,
+                "depends_on": "4.16",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.18",
+            "text": "Наличие системы ливневой канализации",
+            "type": "boolean",
+            "constraints": {
+                "default": true,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.19",
+            "text": "Тип системы ливневой канализации",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Открытая",
+                    "Закрытая",
+                    "Комбинированная"
+                ]
+            },
+            "constraints": {
+                "default": "Закрытая",
+                "depends_on": "4.18",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.20",
+            "text": "Наличие системы утилизации отходов",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.21",
+            "text": "Тип системы утилизации отходов",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Контейнеры",
+                    "Подземные баки",
+                    "Комбинированная"
+                ]
+            },
+            "constraints": {
+                "default": "Контейнеры",
+                "depends_on": "4.20",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.22",
+            "text": "Наличие системы шумозащиты",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.23",
+            "text": "Тип системы шумозащиты",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Экраны",
+                    "Зеленые насаждения",
+                    "Комбинированная"
+                ]
+            },
+            "constraints": {
+                "default": "Экраны",
+                "depends_on": "4.22",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.24",
+            "text": "Наличие системы охраны",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.25",
+            "text": "Тип системы охраны",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Физическая охрана",
+                    "Электронная охрана",
+                    "Комбинированная"
+                ]
+            },
+            "constraints": {
+                "default": "Электронная охрана",
+                "depends_on": "4.24",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.26",
+            "text": "Наличие системы автоматического пожаротушения",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.27",
+            "text": "Тип системы пожаротушения",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Водяная",
+                    "Порошковая",
+                    "Газовая"
+                ]
+            },
+            "constraints": {
+                "default": "Водяная",
+                "depends_on": "4.26",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.28",
+            "text": "Наличие системы управления зданием (BMS)",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.29",
+            "text": "Тип системы BMS",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Базовая",
+                    "Расширенная",
+                    "Интеграционная"
+                ]
+            },
+            "constraints": {
+                "default": "Базовая",
+                "depends_on": "4.28",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.30",
+            "text": "Наличие системы 'Умный дом'",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.31",
+            "text": "Тип системы 'Умный дом'",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Базовая",
+                    "Расширенная",
+                    "Полная интеграция"
+                ]
+            },
+            "constraints": {
+                "default": "Базовая",
+                "depends_on": "4.30",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.32",
+            "text": "Наличие системы электрочасофикации (ЭЧ)",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.33",
+            "text": "Тип системы ЭЧ",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Аналоговая",
+                    "Цифровая"
+                ]
+            },
+            "constraints": {
+                "default": "Цифровая",
+                "depends_on": "4.32",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.34",
+            "text": "Площадь коммерческих помещений, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 1000
+            }
+        },
+        {
+            "number": "4.35",
+            "text": "Количество коммерческих помещений",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 5
+            }
+        },
+        {
+            "number": "4.36",
+            "text": "Наличие встроенных парковок",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.37",
+            "text": "Количество встроенных парковочных мест",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 10,
+                "depends_on": "4.36",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.38",
+            "text": "Наличие отдельно стоящих гаражей",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.39",
+            "text": "Количество мест в отдельно стоящих гаражах",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 20,
+                "depends_on": "4.38",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.40",
+            "text": "Площадь тротуаров, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 500
+            }
+        },
+        {
+            "number": "4.41",
+            "text": "Тип покрытия тротуаров",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Асфальт",
+                    "Плитка",
+                    "Бетон"
+                ]
+            },
+            "constraints": {
+                "default": "Плитка"
+            }
+        },
+        {
+            "number": "4.42",
+            "text": "Наличие системы обогрева тротуаров",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.43",
+            "text": "Площадь зон отдыха, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 300
+            }
+        },
+        {
+            "number": "4.44",
+            "text": "Наличие фонтанов",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.45",
+            "text": "Количество фонтанов",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 1,
+                "depends_on": "4.44",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.46",
+            "text": "Наличие системы видеодомофонов",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.47",
+            "text": "Тип видеодомофонов",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Аналоговые",
+                    "Цифровые",
+                    "IP"
+                ]
+            },
+            "constraints": {
+                "default": "IP",
+                "depends_on": "4.46",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.48",
+            "text": "Наличие системы контроля загазованности",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.49",
+            "text": "Тип системы контроля загазованности",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Автономная",
+                    "Интегрированная"
+                ]
+            },
+            "constraints": {
+                "default": "Автономная",
+                "depends_on": "4.48",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.50",
+            "text": "Наличие системы системы молниезащиты",
+            "type": "boolean",
+            "constraints": {
+                "default": true,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.51",
+            "text": "Тип системы молниезащиты",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Активная",
+                    "Пассивная"
+                ]
+            },
+            "constraints": {
+                "default": "Пассивная",
+                "depends_on": "4.50",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.52",
+            "text": "Наличие системы заземления",
+            "type": "boolean",
+            "constraints": {
+                "default": true,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.53",
+            "text": "Тип системы заземления",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "TN-C",
+                    "TN-S",
+                    "TN-C-S"
+                ]
+            },
+            "constraints": {
+                "default": "TN-S",
+                "depends_on": "4.52",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.54",
+            "text": "Количество трансформаторных подстанций",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 1
+            }
+        },
+        {
+            "number": "4.55",
+            "text": "Мощность трансформаторных подстанций, кВт",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 1000
+            }
+        },
+        {
+            "number": "4.56",
+            "text": "Наличие резервного электроснабжения",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.57",
+            "text": "Тип резервного электроснабжения",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Генератор",
+                    "ИБП",
+                    "Комбинированное"
+                ]
+            },
+            "constraints": {
+                "default": "Генератор",
+                "depends_on": "4.56",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.58",
+            "text": "Площадь помещений для инженерного оборудования, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 200
+            }
+        },
+        {
+            "number": "4.59",
+            "text": "Наличие системы водоочистки",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.60",
+            "text": "Тип системы водоочистки",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Механическая",
+                    "Химическая",
+                    "Комбинированная"
+                ]
+            },
+            "constraints": {
+                "default": "Механическая",
+                "depends_on": "4.59",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.61",
+            "text": "Наличие системы теплоснабжения",
+            "type": "boolean",
+            "constraints": {
+                "default": true,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.62",
+            "text": "Тип системы теплоснабжения",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Центральное",
+                    "Автономное",
+                    "Комбинированное"
+                ]
+            },
+            "constraints": {
+                "default": "Центральное",
+                "depends_on": "4.61",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.63",
+            "text": "Количество тепловых пунктов",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 1
+            }
+        },
+        {
+            "number": "4.64",
+            "text": "Мощность тепловых пунктов, кВт",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 500
+            }
+        },
+        {
+            "number": "4.65",
+            "text": "Наличие системы холодоснабжения",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.66",
+            "text": "Тип системы холодоснабжения",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Центральное",
+                    "Автономное"
+                ]
+            },
+            "constraints": {
+                "default": "Центральное",
+                "depends_on": "4.65",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.67",
+            "text": "Количество холодильных установок",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 1
+            }
+        },
+        {
+            "number": "4.68",
+            "text": "Мощность холодильных установок, кВт",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 200
+            }
+        },
+        {
+            "number": "4.69",
+            "text": "Наличие системы газоснабжения",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.70",
+            "text": "Тип системы газоснабжения",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Центральное",
+                    "Автономное"
+                ]
+            },
+            "constraints": {
+                "default": "Центральное",
+                "depends_on": "4.69",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.71",
+            "text": "Количество газовых котлов",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 0,
+                "depends_on": "4.69",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.72",
+            "text": "Мощность газовых котлов, кВт",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 0,
+                "depends_on": "4.69",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.73",
+            "text": "Наличие системы умного освещения",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.74",
+            "text": "Тип системы умного освещения",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Датчики движения",
+                    "Таймеры",
+                    "Комбинированная"
+                ]
+            },
+            "constraints": {
+                "default": "Датчики движения",
+                "depends_on": "4.73",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.75",
+            "text": "Наличие системы управления лифтами",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.76",
+            "text": "Тип системы управления лифтами",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Стандартная",
+                    "Интеллектуальная"
+                ]
+            },
+            "constraints": {
+                "default": "Стандартная",
+                "depends_on": "4.75",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.77",
+            "text": "Наличие системы мониторинга инженерных систем",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.78",
+            "text": "Тип системы мониторинга",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Локальная",
+                    "Облачная"
+                ]
+            },
+            "constraints": {
+                "default": "Локальная",
+                "depends_on": "4.77",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.79",
+            "text": "Наличие системы управления парковкой",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.80",
+            "text": "Тип системы управления парковкой",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Автоматическая",
+                    "Полуавтоматическая"
+                ]
+            },
+            "constraints": {
+                "default": "Автоматическая",
+                "depends_on": "4.79",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.81",
+            "text": "Наличие системы солнечных панелей",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.82",
+            "text": "Мощность солнечных панелей, кВт",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 0,
+                "depends_on": "4.81",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.83",
+            "text": "Наличие системы сбора дождевой воды",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.84",
+            "text": "Объем системы сбора дождевой воды, м³",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 0,
+                "depends_on": "4.83",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.85",
+            "text": "Наличие системы рекуперации тепла",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.86",
+            "text": "Тип системы рекуперации тепла",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Пластинчатая",
+                    "Роторная"
+                ]
+            },
+            "constraints": {
+                "default": "Пластинчатая",
+                "depends_on": "4.85",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.87",
+            "text": "Наличие системы управления шторами",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.88",
+            "text": "Тип системы управления шторами",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Автоматическая",
+                    "Ручная"
+                ]
+            },
+            "constraints": {
+                "default": "Автоматическая",
+                "depends_on": "4.87",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.89",
+            "text": "Наличие системы умного учета ресурсов",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.90",
+            "text": "Тип системы умного учета",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Вода",
+                    "Электричество",
+                    "Комбинированная"
+                ]
+            },
+            "constraints": {
+                "default": "Комбинированная",
+                "depends_on": "4.89",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.91",
+            "text": "Наличие системы управления климатом",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.92",
+            "text": "Тип системы управления климатом",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Локальная",
+                    "Централизованная"
+                ]
+            },
+            "constraints": {
+                "default": "Локальная",
+                "depends_on": "4.91",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.93",
+            "text": "Наличие системы управления освещением",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.94",
+            "text": "Тип системы управления освещением",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Датчики",
+                    "Таймеры",
+                    "Комбинированная"
+                ]
+            },
+            "constraints": {
+                "default": "Датчики",
+                "depends_on": "4.93",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.95",
+            "text": "Наличие системы управления доступом",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.96",
+            "text": "Тип системы управления доступом",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Кодовые замки",
+                    "Карт-ридеры",
+                    "Биометрия"
+                ]
+            },
+            "constraints": {
+                "default": "Карт-ридеры",
+                "depends_on": "4.95",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.97",
+            "text": "Наличие системы умного паркинга",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.98",
+            "text": "Тип системы умного паркинга",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Автоматическая",
+                    "Полуавтоматическая"
+                ]
+            },
+            "constraints": {
+                "default": "Автоматическая",
+                "depends_on": "4.97",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.99",
+            "text": "Наличие системы умного дома для коммерческих помещений",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.100",
+            "text": "Тип системы умного дома для коммерческих помещений",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Базовая",
+                    "Расширенная"
+                ]
+            },
+            "constraints": {
+                "default": "Базовая",
+                "depends_on": "4.99",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.101",
+            "text": "Наличие системы управления вентиляцией",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.102",
+            "text": "Тип системы управления вентиляцией",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Автоматическая",
+                    "Ручная"
+                ]
+            },
+            "constraints": {
+                "default": "Автоматическая",
+                "depends_on": "4.101",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.103",
+            "text": "Наличие системы умной уборки",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.104",
+            "text": "Тип системы умной уборки",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Роботы",
+                    "Автоматизированная"
+                ]
+            },
+            "constraints": {
+                "default": "Роботы",
+                "depends_on": "4.103",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.105",
+            "text": "Наличие системы управления энергоэффективностью",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.106",
+            "text": "Тип системы энергоэффективности",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Пассивная",
+                    "Активная"
+                ]
+            },
+            "constraints": {
+                "default": "Пассивная",
+                "depends_on": "4.105",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.107",
+            "text": "Наличие системы умного управления водой",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "4.108",
+            "text": "Тип системы умного управления водой",
+            "type": "dropdown",
+            "options": {
+                "values": [
+                    "Датчики",
+                    "Автоматизированная"
+                ]
+            },
+            "constraints": {
+                "default": "Датчики",
+                "depends_on": "4.107",
+                "condition": "True"
+            }
+        },
+        {
+            "number": "4.109",
+            "text": "Наличие системы управления безопасностью",
+            "type": "boolean",
+            "constraints": {
+                "default": false,
+                "input_type": "radiobutton"
+            }
+        },
+        {
+            "number": "5.1",
+            "text": "Общая площадь объекта, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 100,
+                "example": 10000
+            }
+        },
+        {
+            "number": "5.2",
+            "text": "Общая площадь жилых помещений, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 100,
+                "example": 8000
+            }
+        },
+        {
+            "number": "5.3",
+            "text": "Общая площадь коммерческих помещений, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 2000
+            }
+        },
+        {
+            "number": "5.4",
+            "text": "Общее количество квартир",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 100
+            }
+        },
+        {
+            "number": "5.5",
+            "text": "Общее количество машиномест",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 50
+            }
+        },
+        {
+            "number": "5.6",
+            "text": "Общая площадь благоустройства, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 5000
+            }
+        },
+        {
+            "number": "5.7",
+            "text": "Количество корпусов (итоговое)",
+            "type": "integer",
+            "constraints": {
+                "min": 1,
+                "max": 20,
+                "example": 2
+            }
+        },
+        {
+            "number": "5.8",
+            "text": "Общая строительная площадь, м²",
+            "type": "integer",
+            "constraints": {
+                "min": 100,
+                "example": 12000
+            }
+        },
+        {
+            "number": "6.1",
+            "text": "Количество 1-комнатных квартир",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 10,
+                "area_check": {
+                    "min_area": 20,
+                    "max_area": 80
+                }
+            }
+        },
+        {
+            "number": "6.2",
+            "text": "Количество 2-комнатных квартир",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 10,
+                "area_check": {
+                    "min_area": 35,
+                    "max_area": 120
+                }
+            }
+        },
+        {
+            "number": "6.3",
+            "text": "Количество 3-комнатных квартир",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 10,
+                "area_check": {
+                    "min_area": 50,
+                    "max_area": 200
+                }
+            }
+        },
+        {
+            "number": "6.4",
+            "text": "Количество 4-комнатных квартир",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 0,
+                "area_check": {
+                    "min_area": 65,
+                    "max_area": 250
+                }
+            }
+        },
+        {
+            "number": "6.5",
+            "text": "Количество квартир более 4 комнат",
+            "type": "integer",
+            "constraints": {
+                "min": 0,
+                "example": 0,
+                "area_check": {
+                    "min_area": 80,
+                    "max_area": 300
+                }
+            }
+        }
+    ]
+}

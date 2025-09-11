@@ -33,7 +33,7 @@ class ResponseRepository:
         db_response = self.get(response_id)
         if db_response:
             if response.response_value is not None:
-                db_response.response_value = str(response.response_value)
+                db_response.response_value = response.response_value
             self.db.commit()
             self.db.refresh(db_response)
             return db_response

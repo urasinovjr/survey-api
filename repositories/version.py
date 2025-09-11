@@ -3,6 +3,7 @@ from domain.models import Version
 from domain.schemas import VersionCreate, VersionUpdate
 from typing import List
 
+
 class VersionRepository:
     def __init__(self, db: Session):
         self.db = db
@@ -42,3 +43,20 @@ class VersionRepository:
             self.db.commit()
             return True
         return False
+
+
+class VersionRepository:
+    def __init__(self, db):
+        self.db = db
+
+    def get(self, id: int):
+        return self.db.query(models.Version).get(id)
+
+    def list(self, limit: int = 100, offset: int = 0):
+        return (
+            self.db.query(models.Version)
+            .order_by(models.Version.id.desc())
+            .offset(offset)
+            .limit(limit)
+            .all()
+        )

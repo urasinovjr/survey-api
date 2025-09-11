@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: survey_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app}
+      POSTGRES_DB: ${POSTGRES_DB:-survey}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-app} -d ${POSTGRES_DB:-survey}" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  alembic:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: survey_alembic
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      PYTHONPATH: .
+    command: >
+      sh -c "
+        alembic upgrade head
+      "
+    # alembic — одноразовый job; если надо, можно оставить без restart
+    restart: "no"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: survey_app
+    depends_on:
+      alembic:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      UVICORN_HOST: ${UVICORN_HOST:-0.0.0.0}
+      UVICORN_PORT: ${UVICORN_PORT:-8000}
+      PYTHONPATH: .
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "
+        uvicorn main:app --host ${UVICORN_HOST:-0.0.0.0} --port ${UVICORN_PORT:-8000}
+      "
+    restart: unless-stopped
+
+volumes:
+  pgdata:
