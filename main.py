@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from api import versions, questions, responses
-from db.database import init_db
 from api import auth as auth_api
 from api import health
 

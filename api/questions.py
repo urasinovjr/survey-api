@@ -13,7 +13,7 @@ from typing import List, Optional
 from db.database import get_db
 from domain.schemas import Question, QuestionCreate, QuestionUpdate
 from repositories.question import QuestionRepository
-from db import models
+from domain import models
 
 router = APIRouter(prefix="/questions", tags=["questions"])
 

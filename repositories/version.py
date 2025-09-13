@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from domain.models import Version
 from domain.schemas import VersionCreate, VersionUpdate
 from typing import List
-import domain.models as models
+from domain import models
 
 
 class VersionRepository:
