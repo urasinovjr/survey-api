@@ -14,6 +14,7 @@ from db.database import get_db
 from domain.schemas import Response as ResponseSchema, ResponseCreate, ResponseUpdate
 from services.response import ResponseService
 from repositories.response import ResponseRepository
+from db import models
 
 router = APIRouter(prefix="/responses", tags=["responses"])
 
